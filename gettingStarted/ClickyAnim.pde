@@ -28,8 +28,9 @@ class ClickyAnim{
             return maxDia;
 
         } else if (timeElapsed > duration / 2 && timeElapsed < duration){//if shrinking
-            return (int) (1 - (timeElapsed - duration / 2) / (duration / 2)) * maxDia ;
-
+            int timeRemaining = ((int) duration) - timeElapsed;
+        
+            return (int) ((timeRemaining / duration) * maxDia);
         } else {//done, should be thrown out
             throw new FinishedAnimException("Duration was exceeded. Please remove from queue.");
         }

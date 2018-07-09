@@ -1,6 +1,7 @@
+import ddf.minim.*;
 public ArrayList<ClickyAnim> anims = new ArrayList<ClickyAnim>();
 
-public int animDuration = 10000;
+public int animDuration = 3000;
 public int animMaxSize = 50;
 
 Camera worldCamera;
@@ -8,26 +9,23 @@ PImage backgroundBrick;
 
 PVector mapSize = new PVector(1080, 1024);
 
+Minim minim;
+AudioPlayer player;
+
 void setup(){
   size(800, 600);
   frameRate(60);
   worldCamera = new Camera( (int) mapSize.x,  (int) mapSize.y);
+
+  //init textures
   backgroundBrick = loadImage("brick.png");
+
+  //init sound
+  minim = new Minim(this);
+  
 }
 
 void draw(){
-
-
-  
-
-
-    //CAMERA DEBUG
-  PVector virtualMousePos = new PVector(mouseX + worldCamera.getPos().x,
-                                  mouseY + worldCamera.getPos().y);
-  text("Camera Pos: " + worldCamera.getPos().x + ", " + worldCamera.getPos().y , 10, 20);
-  text("Mouse Virtual Pos: " +  + virtualMousePos.x + ", " + virtualMousePos.y, 10, 40);
-  text("Mouse Actual Pos: " + mouseX + ", " + mouseY, 10, 60 );
-  
 
   //camera stuff
   translate(-worldCamera.getPos().x, -worldCamera.getPos().y);
@@ -52,15 +50,24 @@ void draw(){
 
   for(Integer i : toRemove){
     anims.remove((int) i);
+
     System.out.println("Removed: "  + i + ", Size: " + anims.size());
   }
   
   rect(130, 120, 60, 80);
 
+  //CAMERA DEBUG
+  translate(worldCamera.getPos().x, worldCamera.getPos().y);
+  PVector virtualMousePos = new PVector(mouseX + worldCamera.getPos().x,
+                                  mouseY + worldCamera.getPos().y);
+  text("Camera Pos: " + worldCamera.getPos().x + ", " + worldCamera.getPos().y , 10, 20);
+  text("Mouse Virtual Pos: " +  + virtualMousePos.x + ", " + virtualMousePos.y, 10, 40);
+  text("Mouse Actual Pos: " + mouseX + ", " + mouseY, 10, 60 );
+  
 }
 
 void mousePressed() {
-
+  playPopSound();
   PVector virtualMousePos = new PVector(mouseX + worldCamera.getPos().x,
                                     mouseY + worldCamera.getPos().y);
 
@@ -87,4 +94,9 @@ void drawBackground(){
     placementPosition.x = 0;
     placementPosition.y += backgroundBrick.height;
   }
+}
+
+void playPopSound(){
+    player  = minim.loadFile("pop.mp3");
+    player.play();
 }
