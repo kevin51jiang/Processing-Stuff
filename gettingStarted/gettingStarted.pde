@@ -4,17 +4,21 @@ public int animDuration = 10000;
 public int animMaxSize = 50;
 
 Camera worldCamera;
+PImage backgroundBrick;
+
+PVector mapSize = new PVector(1080, 1024);
 
 void setup(){
   size(800, 600);
   frameRate(60);
-  worldCamera = new Camera(1080, 1024);
+  worldCamera = new Camera( (int) mapSize.x,  (int) mapSize.y);
+  backgroundBrick = loadImage("brick.png");
 }
 
 void draw(){
 
 
-  drawBackground();
+  
 
 
     //CAMERA DEBUG
@@ -28,6 +32,8 @@ void draw(){
   //camera stuff
   translate(-worldCamera.getPos().x, -worldCamera.getPos().y);
   worldCamera.update();
+
+  drawBackground();
 
   int currentTime = millis();
 
@@ -64,6 +70,21 @@ void mousePressed() {
 
 
 void drawBackground(){
+  PVector placementPosition = new PVector(0,0);
+
+  //clear everything off
   background(155);
 
+  //for titling background vertically
+  while(placementPosition.y < mapSize.y) {
+
+    //for tiling it horizontally
+    while(placementPosition.x < mapSize.x) {
+      image(backgroundBrick, placementPosition.x, placementPosition.y);
+      placementPosition.x += backgroundBrick.width;
+    }
+
+    placementPosition.x = 0;
+    placementPosition.y += backgroundBrick.height;
+  }
 }
