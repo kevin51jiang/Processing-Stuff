@@ -66,13 +66,20 @@ void draw(){
   
 }
 
-void mousePressed() {
-  playPopSound();
-  PVector virtualMousePos = new PVector(mouseX + worldCamera.getPos().x,
-                                    mouseY + worldCamera.getPos().y);
+void mouseClicked() {
+  if(mouseButton == RIGHT) {
+    playPopSound();
+    PVector virtualMousePos = new PVector(mouseX + worldCamera.getPos().x,
+                                      mouseY + worldCamera.getPos().y);
 
-  anims.add(new ClickyAnim(animMaxSize, animDuration, millis(), (int) virtualMousePos.x, (int) virtualMousePos.y));
-  System.out.println("Added new click @ " + mouseX + ", " + mouseY + " | VIRT: " + virtualMousePos.x + ", " + virtualMousePos.y);
+    anims.add(new ClickyAnim(animMaxSize, animDuration, millis(), (int) virtualMousePos.x, (int) virtualMousePos.y));
+    System.out.println("Added new click @ " + mouseX + ", " + mouseY + " | VIRT: " + virtualMousePos.x + ", " + virtualMousePos.y);
+
+  } else if(mouseButton == LEFT) {
+    playSuckSound();
+    
+  }
+  
 }
 
 
@@ -99,4 +106,9 @@ void drawBackground(){
 void playPopSound(){
     player  = minim.loadFile("pop.mp3");
     player.play();
+}
+
+void playSuckSound(){
+  player = minim.loadFile("suck.mp3");
+  player.play();
 }
