@@ -14,15 +14,24 @@ import java.io.IOException;
 
 public class NotARipoff extends PApplet {
 
+private int hello = 0;
+
 public void setup() {
     
-    rect(20, 20, 50 , 60);
+
 }
 
 public void draw() {
+    clear();
+    background(30, 0);
+    text(String.valueOf(frameRate), 10, 10, 100f, 100f);
+    hello++;
+    rect(hello, 20, 60, 30);
+}
+public class Player {
     
 }
-  public void settings() {  fullScreen(SPAN); }
+  public void settings() {  size(600, 800); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "NotARipoff" };
     if (passedArgs != null) {
